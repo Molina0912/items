@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⭐ Lista de Ítems - Spawn Server</title>
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.16/index.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#0a0a0f;
+--bg-secondary:#12121a;
+--bg-card:#1a1a2e;
+--bg-card-hover:#222240;
+--accent:#6c5ce7;
+--accent-light:#a29bfe;
+--accent-glow:rgba(108,92,231,0.3);
+--text-primary:#e8e8f0;
+--text-secondary:#8888a8;
+--border:#2a2a3e;
+--success:#00cec9;
+--warning:#fdcb6e;
+--danger:#ff6b6b;
+--table-stripe:rgba(255,255,255,0.02);
+}
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg-primary);
+color:var(--text-primary);
+min-height:100vh;
+overflow-x:hidden;
+}
+body::before{
+content:'';
+position:fixed;
+top:0;left:0;right:0;bottom:0;
+background:
+radial-gradient(ellipse at 10% 20%,rgba(108,92,231,0.08) 0%,transparent 50%),
+radial-gradient(ellipse at 90% 80%,rgba(0,206,201,0.06) 0%,transparent 50%);
+pointer-events:none;
+z-index:0;
+}
+.app-container{
+display:flex;
+min-height:100vh;
+position:relative;
+z-index:1;
+}
+/* Sidebar */
+.sidebar{
+width:280px;
+background:var(--bg-secondary);
+border-right:1px solid var(--border);
+position:fixed;
+top:0;left:0;bottom:0;
+overflow-y:auto;
+z-index:100;
+transition:transform .3s ease;
+scrollbar-width:thin;
+scrollbar-color:var(--accent) var(--bg-secondary);
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--accent);border-radius:4px}
+.sidebar-header{
+padding:24px 20px;
+border-bottom:1px solid var(--border);
+text-align:center;
+background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));
+}
+.sidebar-header h1{
+font-size:1.3rem;
+font-weight:800;
+background:linear-gradient(135deg,var(--accent-light),var(--success));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+background-clip:text;
+letter-spacing:-0.5px;
+}
+.sidebar-header p{
+font-size:.75rem;
+color:var(--text-secondary);
+margin-top:4px;
+}
+.search-box{
+padding:16px 20px;
+border-bottom:1px solid var(--border);
+position:sticky;
+top:0;
+background:var(--bg-secondary);
+z-index:2;
+}
+.search-box input{
+width:100%;
+padding:10px 14px;
+padding-left:38px;
+background:var(--bg-primary);
+border:1px solid var(--border);
+border-radius:10px;
+color:var(--text-primary);
+font-size:.85rem;
+font-family:'Inter',sans-serif;
+transition:all .2s;
+outline:none;
+}
+.search-box input:focus{
+border-color:var(--accent);
+box-shadow:0 0 0 3px var(--accent-glow);
+}
+.search-box::before{
+content:'🔍';
+position:absolute;
+left:32px;
+top:50%;
+transform:translateY(-50%);
+font-size:.85rem;
+}
+.nav-categories{
+padding:12px 10px;
+}
+.nav-group-title{
+font-size:.65rem;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:1.5px;
+color:var(--text-secondary);
+padding:16px 12px 6px;
+}
+.nav-item{
+display:flex;
+align-items:center;
+gap:10px;
+padding:9px 14px;
+border-radius:8px;
+cursor:pointer;
+transition:all .2s;
+font-size:.82rem;
+color:var(--text-secondary);
+text-decoration:none;
+margin-bottom:2px;
+}
+.nav-item:hover{
+background:var(--bg-card);
+color:var(--text-primary);
+}
+.nav-item.active{
+background:linear-gradient(135deg,rgba(108,92,231,0.2),rgba(108,92,231,0.05));
+color:var(--accent-light);
+border-left:3px solid var(--accent);
+}
+.nav-item .nav-icon{
+font-size:1rem;
+width:22px;
+text-align:center;
+}
+.nav-item .nav-count{
+margin-left:auto;
+font-size:.65rem;
+background:var(--bg-primary);
+padding:2px 8px;
+border-radius:10px;
+color:var(--text-secondary);
+}
+/* Main Content */
+.main-content{
+margin-left:280px;
+flex:1;
+padding:30px 40px;
+max-width:100%;
+}
+.main-header{
+margin-bottom:30px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:16px;
+}
+.main-header h2{
+font-size:1.8rem;
+font-weight:800;
+}
+.main-header h2 span{
+background:linear-gradient(135deg,var(--accent-light),var(--success));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+background-clip:text;
+}
+.stats-bar{
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+}
+.stat-card{
+background:var(--bg-card);
+border:1px solid var(--border);
+border-radius:12px;
+padding:12px 20px;
+text-align:center;
+}
+.stat-card .stat-value{
+font-size:1.4rem;
+font-weight:800;
+color:var(--accent-light);
+}
+.stat-card .stat-label{
+font-size:.7rem;
+color:var(--text-secondary);
+text-transform:uppercase;
+letter-spacing:1px;
+}
+/* Category Section */
+.category-section{
+margin-bottom:40px;
+animation:fadeInUp .5s ease both;
+}
+.category-section:nth-child(2){animation-delay:.05s}
+.category-section:nth-child(3){animation-delay:.1s}
+.category-section:nth-child(4){animation-delay:.15s}
+@keyframes fadeInUp{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+.category-header{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:16px;
+padding-bottom:12px;
+border-bottom:2px solid var(--border);
+}
+.category-header .cat-icon{
+font-size:1.5rem;
+width:44px;
+height:44px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:var(--bg-card);
+border-radius:12px;
+border:1px solid var(--border);
+}
+.category-header h3{
+font-size:1.15rem;
+font-weight:700;
+color:var(--text-primary);
+}
+.category-header .cat-badge{
+margin-left:auto;
+font-size:.7rem;
+background:var(--bg-card);
+padding:4px 12px;
+border-radius:20px;
+color:var(--text-secondary);
+border:1px solid var(--border);
+}
+/* Table */
+.table-wrapper{
+background:var(--bg-card);
+border:1px solid var(--border);
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 4px 24px rgba(0,0,0,0.3);
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+thead th{
+background:linear-gradient(135deg,rgba(108,92,231,0.15),rgba(108,92,231,0.05));
+padding:14px 20px;
+text-align:left;
+font-size:.75rem;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:1.5px;
+color:var(--accent-light);
+border-bottom:1px solid var(--border);
+position:sticky;
+top:0;
+}
+thead th:last-child{
+text-align:center;
+}
+tbody tr{
+transition:all .2s;
+border-bottom:1px solid rgba(255,255,255,0.03);
+}
+tbody tr:nth-child(even){
+background:var(--table-stripe);
+}
+tbody tr:hover{
+background:var(--bg-card-hover);
+transform:scale(1.002);
+}
+tbody tr:last-child{
+border-bottom:none;
+}
+tbody td{
+padding:12px 20px;
+font-size:.88rem;
+}
+tbody td:last-child{
+text-align:center;
+}
+.item-name{
+font-weight:600;
+color:var(--text-primary);
+display:flex;
+align-items:center;
+gap:8px;
+}
+.item-name .dot{
+width:6px;height:6px;
+border-radius:50%;
+background:var(--accent);
+flex-shrink:0;
+}
+.spawn-code{
+font-family:'Courier New',monospace;
+font-size:.82rem;
+background:var(--bg-primary);
+padding:4px 12px;
+border-radius:6px;
+color:var(--success);
+border:1px solid rgba(0,206,201,0.2);
+display:inline-block;
+cursor:pointer;
+transition:all .2s;
+position:relative;
+}
+.spawn-code:hover{
+background:rgba(0,206,201,0.1);
+border-color:var(--success);
+}
+.spawn-code .copy-tooltip{
+position:absolute;
+top:-30px;
+left:50%;
+transform:translateX(-50%);
+background:var(--accent);
+color:#fff;
+padding:4px 10px;
+border-radius:6px;
+font-size:.7rem;
+white-space:nowrap;
+opacity:0;
+pointer-events:none;
+transition:opacity .2s;
+}
+.spawn-code .copy-tooltip.show{
+opacity:1;
+}
+/* Premium items */
+.premium-row{
+background:linear-gradient(90deg,rgba(253,203,110,0.05),transparent)!important;
+}
+.premium-row .item-name .dot{
+background:var(--warning);
+}
+.premium-row .spawn-code{
+color:var(--warning);
+border-color:rgba(253,203,110,0.3);
+}
+/* Back to top */
+.back-top{
+position:fixed;
+bottom:30px;
+right:30px;
+width:48px;height:48px;
+background:var(--accent);
+border:none;
+border-radius:50%;
+color:#fff;
+font-size:1.2rem;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+transform:translateY(20px);
+transition:all .3s;
+z-index:999;
+box-shadow:0 4px 20px var(--accent-glow);
+}
+.back-top.visible{
+opacity:1;
+transform:translateY(0);
+}
+.back-top:hover{
+transform:translateY(-3px);
+box-shadow:0 6px 30px var(--accent-glow);
+}
+/* Mobile toggle */
+.mobile-toggle{
+display:none;
+position:fixed;
+top:16px;left:16px;
+z-index:200;
+width:44px;height:44px;
+background:var(--bg-card);
+border:1px solid var(--border);
+border-radius:10px;
+color:var(--text-primary);
+font-size:1.2rem;
+cursor:pointer;
+align-items:center;
+justify-content:center;
+}
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.6);
+z-index:90;
+}
+/* Responsive */
+@media(max-width:900px){
+.sidebar{
+transform:translateX(-100%);
+}
+.sidebar.open{
+transform:translateX(0);
+}
+.overlay.open{
+display:block;
+}
+.mobile-toggle{
+display:flex;
+}
+.main-content{
+margin-left:0;
+padding:20px 16px;
+padding-top:70px;
+}
+}
+@media(max-width:600px){
+thead th,tbody td{
+padding:10px 12px;
+}
+.item-name{
+font-size:.8rem;
+}
+.spawn-code{
+font-size:.72rem;
+padding:3px 8px;
+}
+.main-header h2{
+font-size:1.3rem;
+}
+.stats-bar{
+width:100%;
+}
+.stat-card{
+flex:1;
+min-width:80px;
+}
+}
+/* Scrollbar */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+/* Table scroll on mobile */
+@media(max-width:600px){
+.table-wrapper{
+overflow-x:auto;
+}
+table{
+min-width:400px;
+}
+}
+/* Highlight on search */
+mark{
+background:rgba(108,92,231,0.3);
+color:var(--accent-light);
+padding:1px 3px;
+border-radius:3px;
+}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<div class="app-container">
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>⭐ Spawn Items</h1>
+<p>Lista completa de ítems y comandos</p>
+</div>
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Buscar ítem o código...">
+</div>
+<nav class="nav-categories" id="navCategories">
+<div class="nav-group-title">General</div>
+<a class="nav-item active" href="#premium" data-section="premium">
+<span class="nav-icon">⭐</span> Premium
+<span class="nav-count">10</span>
+</a>
+<a class="nav-item" href="#armas-principales" data-section="armas-principales">
+<span class="nav-icon">🔫</span> Armas Principales
+<span class="nav-count">5</span>
+</a>
+<a class="nav-item" href="#armas" data-section="armas">
+<span class="nav-icon">🔫</span> Armas
+<span class="nav-count">40</span>
+</a>
+<a class="nav-item" href="#armas-blancas" data-section="armas-blancas">
+<span class="nav-icon">🔪</span> Armas Blancas
+<span class="nav-count">15</span>
+</a>
+<a class="nav-item" href="#utilitarios" data-section="utilitarios">
+<span class="nav-icon">🔧</span> Utilitarios
+<span class="nav-count">8</span>
+</a>
+<a class="nav-item" href="#municiones" data-section="municiones">
+<span class="nav-icon">🎒</span> Municiones
+<span class="nav-count">8</span>
+</a>
+
+<div class="nav-group-title">Equipamiento</div>
+<a class="nav-item" href="#mochilas" data-section="mochilas">
+<span class="nav-icon">🎒</span> Mochilas
+<span class="nav-count">8</span>
+</a>
+<a class="nav-item" href="#partes-vehiculo" data-section="partes-vehiculo">
+<span class="nav-icon">🔩</span> Partes de Vehículo
+<span class="nav-count">20</span>
+</a>
+<a class="nav-item" href="#accesorios-arma" data-section="accesorios-arma">
+<span class="nav-icon">🔧</span> Accesorios de Arma
+<span class="nav-count">5</span>
+</a>
+<a class="nav-item" href="#hospital" data-section="hospital">
+<span class="nav-icon">🏥</span> Hospital / Bomberos
+<span class="nav-count">14</span>
+</a>
+
+<div class="nav-group-title">Consumibles</div>
+<a class="nav-item" href="#comida" data-section="comida">
+<span class="nav-icon">🍕</span> Comida y Bebida
+<span class="nav-count">65</span>
+</a>
+<a class="nav-item" href="#pesca" data-section="pesca">
+<span class="nav-icon">🐟</span> Pesca
+<span class="nav-count">13</span>
+</a>
+<a class="nav-item" href="#drogas" data-section="drogas">
+<span class="nav-icon">💊</span> Drogas
+<span class="nav-count">10</span>
+</a>
+<a class="nav-item" href="#joyas" data-section="joyas">
+<span class="nav-icon">💎</span> Joyas y Gemas
+<span class="nav-count">15</span>
+</a>
+
+<div class="nav-group-title">Materiales</div>
+<a class="nav-item" href="#herramientas" data-section="herramientas">
+<span class="nav-icon">🛠️</span> Herramientas y Materiales
+<span class="nav-count">50</span>
+</a>
+<a class="nav-item" href="#kits-reparacion" data-section="kits-reparacion">
+<span class="nav-icon">⚙️</span> Kits de Reparación
+<span class="nav-count">4</span>
+</a>
+
+<div class="nav-group-title">Vehículos</div>
+<a class="nav-item" href="#audi" data-section="audi">
+<span class="nav-icon">🚗</span> Audi
+<span class="nav-count">10</span>
+</a>
+<a class="nav-item" href="#dodge" data-section="dodge">
+<span class="nav-icon">🚗</span> Dodge
+<span class="nav-count">6</span>
+</a>
+<a class="nav-item" href="#toyota" data-section="toyota">
+<span class="nav-icon">🚗</span> Toyota
+<span class="nav-count">4</span>
+</a>
+<a class="nav-item" href="#ford" data-section="ford">
+<span class="nav-icon">🚗</span> Ford
+<span class="nav-count">10</span>
+</a>
+<a class="nav-item" href="#tesla" data-section="tesla">
+<span class="nav-icon">🚗</span> Tesla
+<span class="nav-count">2</span>
+</a>
+<a class="nav-item" href="#cupula" data-section="cupula">
+<span class="nav-icon">🚗</span> Carros de la Cúpula
+<span class="nav-count">10</span>
+</a>
+<a class="nav-item" href="#baby" data-section="baby">
+<span class="nav-icon">🚗</span> Carros Baby
+<span class="nav-count">13</span>
+</a>
+
+<div class="nav-group-title">Otros</div>
+<a class="nav-item" href="#electronicos" data-section="electronicos">
+<span class="nav-icon">🎮</span> Electrónicos y Juguetes
+<span class="nav-count">8</span>
+</a>
+<a class="nav-item" href="#distintivos" data-section="distintivos">
+<span class="nav-icon">🏅</span> Distintivos y Tarjetas
+<span class="nav-count">12</span>
+</a>
+<a class="nav-item" href="#lavanderia" data-section="lavanderia">
+<span class="nav-icon">🧹</span> Lavandería / Crafting
+<span class="nav-count">11</span>
+</a>
+<a class="nav-item" href="#vales" data-section="vales">
+<span class="nav-icon">🎫</span> Vales
+<span class="nav-count">6</span>
+</a>
+<a class="nav-item" href="#restaurantes" data-section="restaurantes">
+<span class="nav-icon">🍔</span> Comidas de Restaurantes
+<span class="nav-count">16</span>
+</a>
+<a class="nav-item" href="#miscelaneos" data-section="miscelaneos">
+<span class="nav-icon">🌿</span> Misceláneos
+<span class="nav-count">50</span>
+</a>
+</nav>
+</aside>
+
+<main class="main-content" id="mainContent">
+<div class="main-header">
+<h2>📋 Lista de <span>Ítems</span></h2>
+<div class="stats-bar">
+<div class="stat-card">
+<div class="stat-value" id="totalItems">0</div>
+<div class="stat-label">Total Ítems</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" id="totalCategories">0</div>
+<div class="stat-label">Categorías</div>
+</div>
+</div>
+</div>
+
+<div id="sectionsContainer"></div>
+</main>
+</div>
+
+<button class="back-top" id="backTop" aria-label="Volver arriba">↑</button>
+
+<script>
+const DATA = {
+premium: {
+title: "Ítems Premium", icon: "⭐", premium: true,
+items: [
+["Tarjeta - Sexo masculino","changesexm"],
+["Tarjeta - Sexo femenino","changesexf"],
+["Tarjeta - Cambio de nombre","namechange"],
+["Creación de personaje","spawn"],
+["Vip oro","premium03"],
+["Vip plata","premium04"],
+["Vip bronce","premium05"],
+["Segundo slot","newchars"],
+["Diamantes","gemstone"],
+["Pase de batalla","rolepass"]
+]},
+"armas-principales": {
+title: "Armas Principales", icon: "🔫",
+items: [
+["Five Seven","WEAPON_PISTOL_MK2"],
+["M1911","WEAPON_PISTOL"],
+["G3MK2","WEAPON_SPECIALCARBINE_MK2"],
+["G36C","WEAPON_SPECIALCARBINE"],
+["Steyr AUG","WEAPON_ASSAULTSMG"]
+]},
+armas: {
+title: "Armas", icon: "🔫",
+items: [
+["M1911","WEAPON_PISTOL"],
+["Five Seven","WEAPON_PISTOL_MK2"],
+["AK Compacta","WEAPON_COMPACTRIFLE"],
+["Koch VP9","WEAPON_APPISTOL"],
+["ATI FX45","WEAPON_HEAVYPISTOL"],
+["Tec-9","WEAPON_MACHINEPISTOL"],
+["Uzi","WEAPON_MICROSMG"],
+["Pistola de clavos","WEAPON_NAILGUN"],
+["Skorpion V61","WEAPON_MINISMG"],
+["AMT 380","WEAPON_SNSPISTOL"],
+["HK P7M10","WEAPON_SNSPISTOL_MK2"],
+["M1922","WEAPON_VINTAGEPISTOL"],
+["Águila del desierto","WEAPON_PISTOL50"],
+["Magnum 44","WEAPON_REVOLVER"],
+["Glock","WEAPON_COMBATPISTOL"],
+["PARA-FAL M964A1","WEAPON_PARAFAL"],
+["FN L1A1","WEAPON_FNFAL"],
+["Colt XM177","WEAPON_COLTXM177"],
+["M4A4","WEAPON_CARBINERIFLE_MK2"],
+["TAR-21","WEAPON_ADVANCEDRIFLE"],
+["QBZ-95","WEAPON_BULLPUPRIFLE"],
+["L85","WEAPON_BULLPUPRIFLE_MK2"],
+["G36C","WEAPON_SPECIALCARBINE"],
+["G3MK2","WEAPON_SPECIALCARBINE_MK2"],
+["Mossberg 590","WEAPON_PUMPSHOTGUN"],
+["Mossberg 590A1","WEAPON_PUMPSHOTGUN_MK2"],
+["Winchester 1892","WEAPON_MUSKET"],
+["Mossberg 500","WEAPON_SAWNOFFSHOTGUN"],
+["MP5","WEAPON_SMG"],
+["Evo-3","WEAPON_SMG_MK2"],
+["AK-103","WEAPON_ASSAULTRIFLE"],
+["AK-74","WEAPON_ASSAULTRIFLE_MK2"],
+["Steyr AUG","WEAPON_ASSAULTSMG"],
+["Thompson","WEAPON_GUSENBERG"],
+["Francotirador","WEAPON_SNIPERRIFLE"]
+]},
+"armas-blancas": {
+title: "Armas Blancas", icon: "🔪",
+items: [
+["Hacha","WEAPON_HATCHET"],
+["Bate de béisbol","Fj"],
+["Katana","WEAPON_KATANA"],
+["Karambit","WEAPON_KARAMBIT"],
+["Hacha de batalla","WEAPON_BATTLEAXE"],
+["Palanca","WEAPON_CROWBAR"],
+["Palo de golf","WEAPON_GOLFCLUB"],
+["Martillo","WEAPON_HAMMER"],
+["Machete","WEAPON_MACHETE"],
+["Taco de billar","WEAPON_POOLCUE"],
+["Hacha de piedra","WEAPON_STONE_HATCHET"],
+["Llave inglesa","WEAPON_WRENCH"],
+["Puño americano","WEAPON_KNUCKLE"],
+["Linterna","WEAPON_FLASHLIGHT"],
+["Macana","WEAPON_NIGHTSTICK"]
+]},
+utilitarios: {
+title: "Utilitarios", icon: "🔧",
+items: [
+["Bidón","WEAPON_PETROLCAN"],
+["Paracaídas","GADGET_PARACHUTE"],
+["Táser","WEAPON_STUNGUN"],
+["Ladrillo","WEAPON_BRICK"],
+["Bola de nieve","WEAPON_SNOWBALL"],
+["Tenis","WEAPON_SHOES"],
+["Molotov","WEAPON_MOLOTOV"],
+["Granada de humo","WEAPON_SMOKEGRENADE"]
+]},
+municiones: {
+title: "Municiones", icon: "🎒",
+items: [
+["Munición de pistola","WEAPON_PISTOL_AMMO"],
+["Munición de subfusil","WEAPON_SMG_AMMO"],
+["Munición de rifle","WEAPON_RIFLE_AMMO"],
+["Munición de francotirador","WEAPON_SNIPER_AMMO"],
+["Munición de escopeta","WEAPON_SHOTGUN_AMMO"],
+["Clavos","WEAPON_NAIL_AMMO"],
+["Mosquete","WEAPON_MUSKET_AMMO"],
+["Combustible","WEAPON_PETROLCAN_AMMO"]
+]},
+mochilas: {
+title: "Mochilas", icon: "🎒",
+items: [
+["Mochila de escuela","backschool"],
+["Mochila de ciclista","backcyclist"],
+["Mochila de campamento","backcamping"],
+["Mochila Alohomora Blanca","backalohomorawhite"],
+["Mochila Alohomora Negra","backalohomorablack"],
+["Mochila Alohomora Roja","backalohomorared"],
+["Mochila Rudolph Morada","backrudolphpurple"],
+["Mochila Rudolph Roja","backrudolphred"]
+]},
+"partes-vehiculo": {
+title: "Partes de Vehículo", icon: "🔩",
+items: [
+["Motor A","enginea"],["Motor B","engineb"],["Motor C","enginec"],["Motor D","engined"],["Motor E","enginee"],
+["Transmisión A","transmissiona"],["Transmisión B","transmissionb"],["Transmisión C","transmissionc"],["Transmisión D","transmissiond"],["Transmisión E","transmissione"],
+["Frenos A","brakea"],["Frenos B","brakeb"],["Frenos C","brakec"],["Frenos D","braked"],["Frenos E","brakee"],
+["Suspensión A","suspensiona"],["Suspensión B","suspensionb"],["Suspensión C","suspensionc"],["Suspensión D","suspensiond"],["Suspensión E","suspensione"]
+]},
+"accesorios-arma": {
+title: "Accesorios de Arma", icon: "🔧",
+items: [
+["Linterna táctica","attachsFlashlight"],
+["Mira holográfica","attachsCrosshair"],
+["Silenciador","attachsSilencer"],
+["Cargador extendido","attachsMagazine"],
+["Empuñadura","attachsGrip"]
+]},
+hospital: {
+title: "Hospital / Bomberos", icon: "🏥",
+items: [
+["Vendaje","bandage"],
+["Adrenalina","adrenaline"],
+["Bolsa médica","medicbag"],
+["Camilla médica","medicbed"],
+["Desfibrilador","defibrillator"],
+["Jeringa","syringe"],
+["Jeringa A+","syringe01"],
+["Jeringa B+","syringe02"],
+["Jeringa A-","syringe03"],
+["Jeringa B-","syringe04"],
+["Botiquín médico","medkit"],
+["Analgésico","analgesic"],
+["Gasas","gauze"],
+["Alcohol","alcohol"]
+]},
+comida: {
+title: "Comida y Bebida", icon: "🍕",
+items: [
+["Energizante","energetico"],["Agua","water"],["Café","coffee"],["Café con leche","coffeemilk"],["Cola","cola"],
+["Tacos","tacos"],["Papas fritas","fries"],["Refresco","soda"],["Manzana","apple"],["Naranja","orange"],
+["Fresa","strawberry"],["Uva","grape"],["Mandarina","tange"],["Plátano","banana"],["Guaraná","guarana"],
+["Acerola","acerola"],["Maracuyá","passion"],["Tomate","tomato"],["Champiñón","mushroom"],["Azúcar","sugar"],
+["Galletas","cookies"],["Jugo de naranja","orangejuice"],["Jugo de mandarina","tangejuice"],["Jugo de uva","grapejuice"],["Jugo de fresa","strawberryjuice"],
+["Jugo de plátano","bananajuice"],["Jugo de acerola","acerolajuice"],["Jugo de maracuyá","passionjuice"],["Pan","bread"],["Sopa enlatada","cannedsoup"],
+["Lata de frijoles","canofbeans"],["Carne animal","meat"],["Filete de pescado","fishfillet"],["Malvavisco","marshmallow"],["Filete de pescado cocido","cookedfishfillet"],
+["Carne cocida","cookedmeat"],["Hamburguesa","hamburger"],["Hamburguesa artesanal","hamburger2"],["Aros de cebolla","onionrings"],["Pollo frito","chickenfries"],
+["Pizza de mozzarella","pizzamozzarella"],["Pizza de champiñón","pizzamushroom"],["Pizza de plátano","pizzabanana"],["Pizza de chocolate","pizzachocolate"],["Calzone","calzone"],
+["Hot dog","hotdog"],["Dona","donut"],["Sándwich","sandwich"],["Chocolate","chocolate"],["Leche (botella)","milkbottle"],
+["Absolut","absolut"],["Chandon","chandon"],["Dewars","dewars"],["Hennessy","hennessy"],["Té de hongos","mushroomtea"],
+["Té de hongos plus","mushroomteaplus"],["Milk shake","milkshake"],["Cappuccino","cappuccino"],["Manzana del amor","applelove"],["Nigiri","nigirizushi"],
+["Sushi","sushi"],["Cupcake","cupcake"]
+]},
+pesca: {
+title: "Pesca", icon: "🐟",
+items: [
+["Caña de pescar","fishingrod"],
+["Carnada","bait"],
+["Pulpo","octopus"],
+["Camarón","shrimp"],
+["Carpa","carp"],
+["Bacalao","codfish"],
+["Bagre","catfish"],
+["Pez dorado","goldenfish"],
+["Caballa","horsefish"],
+["Tilapia","tilapia"],
+["Pacu","pacu"],
+["Pirarucú","pirarucu"],
+["Tambaquí","tambaqui"]
+]},
+drogas: {
+title: "Drogas", icon: "💊",
+items: [
+["Clonación de marihuana","weedclone"],
+["Hoja de marihuana","weedleaf"],
+["Porro","joint"],
+["Codeína","codeine"],
+["Anfetamina","amphetamine"],
+["Cocaína","cocaine"],
+["Hoja de coca","cokeleaf"],
+["Metanfetamina","meth"],
+["Acetona","acetone"],
+["Juguete de droga","drugtoy"]
+]},
+joyas: {
+title: "Joyas y Gemas", icon: "💎",
+items: [
+["Esmeralda","emerald"],
+["Diamante","diamond"],
+["Rubí","ruby"],
+["Zafiro","sapphire"],
+["Amatista","amethyst"],
+["Ámbar","amber"],
+["Turquesa","turquoise"],
+["Barra de oro","goldbar"],
+["Anillo de plata","silverring"],
+["Anillo de oro","goldring"],
+["Moneda de plata","silvercoin"],
+["Moneda de oro","goldcoin"],
+["Reloj","watch"],
+["Pulsera","bracelet"],
+["Geoda","geode"]
+]},
+herramientas: {
+title: "Herramientas y Materiales", icon: "🛠️",
+items: [
+["Ganzúa de aluminio","lockpick"],
+["Herramientas básicas","toolbox"],
+["Herramientas avanzadas","advtoolbox"],
+["C4","c4"],
+["Pendrive","pendrive"],
+["Resortes","molas"],
+["Cuerpo de pistola","pistolbody"],
+["Cuerpo de subfusil","smgbody"],
+["Cuerpo de rifle","weaponbody"],
+["Lona","tarp"],
+["Chapa de metal","sheetmetal"],
+["Señales de tránsito","roadsigns"],
+["Cuero","leather"],
+["Explosivos","explosives"],
+["Grasa animal","animalfat"],
+["Algodón","cotton"],
+["Esparadrapo","plaster"],
+["Ácido sulfúrico","sulfuric"],
+["Suero fisiológico","saline"],
+["Plástico","plastic"],
+["Vidrio","glass"],
+["Caucho","rubber"],
+["Aluminio","aluminum"],
+["Cobre","copper"],
+["Piel animal","animalpelt"],
+["Tronco de madera","woodlog"],
+["Papel","paper"],
+["Bloque de notas","notepad"],
+["Llave copiada","vehkey"],
+["Neumático","tyres"],
+["Celular","cellphone"],
+["Traje de buceo","scuba"],
+["Esposas","handcuff"],
+["Cuerdas","rope"],
+["Navaja","switchblade"],
+["Picareta","pickaxe"],
+["Maletín","suitcase"],
+["Escáner","scanner"],
+["Nitro","nitro"],
+["Post-it","postit"],
+["Barrera","barrier"],
+["Basura electrónica","techtrash"],
+["Fogata","campfire"],
+["Mesa de creación (coca)","tablecoke"],
+["Mesa de creación (meta)","tablemeth"],
+["Mesa de creación (mota)","tableweed"]
+]},
+"kits-reparacion": {
+title: "Kits de Reparación", icon: "⚙️",
+items: [
+["Kit de reparación - Común","repairkit01"],
+["Kit de reparación - Raro","repairkit02"],
+["Kit de reparación - Épico","repairkit03"],
+["Kit de reparación - Legendario","repairkit04"]
+]},
+audi: {
+title: "Carros - Audi", icon: "🚗",
+items: [
+["Audi RS7","audirs7"],
+["Audi RS6 Avant","rs6avant20"],
+["Audi RS4","rs4"],
+["Audi RS6","audirs6"],
+["Audi S4","s4avant"],
+["Audi TT-RS","ttrs"],
+["Audi A4","aaq4"],
+["Audi TT","auditt"],
+["Audi R8","audir8"],
+["Audi RS3","ars3spxxbk"]
+]},
+dodge: {
+title: "Carros - Dodge", icon: "🚗",
+items: [
+["Dodge Charger 70's","dodgecharger1970"],
+["Dodge Charger RT69","dodgechargerrt69"],
+["Dodge Charger SRT","dodgechargersrt"],
+["Dodge Ram 2500","dodgeram2500"],
+["Dodge Charger F&F","rvrt70"],
+["Dodge RAM 6x6 2022","ram226x6"]
+]},
+toyota: {
+title: "Carros - Toyota", icon: "🚗",
+items: [
+["Toyota Supra","toyotasupra"],
+["Toyota Supra 2","toyotasupra2"],
+["Toyota Supra Pandem","rmodsuprapandem"],
+["Kcorolla","Kcorolla"]
+]},
+ford: {
+title: "Carros - Ford", icon: "🚗",
+items: [
+["Ford Mustang","fordmustang"],
+["Ford Mustang Fast","mustangfast"],
+["Raptor Velociraptor","velociraptor"],
+["Mustang 1969","mustang1969"],
+["Ford Raptor 2017","raptor2017"],
+["Ford ST","st"],
+["Silverado 2017","17silvbb"],
+["Ford Raptor 2019","19raptor"],
+["Bronco Sport","21bro"],
+["F150","f150"]
+]},
+tesla: {
+title: "Carros - Tesla", icon: "🚗",
+items: [
+["Tesla Model S","teslamodels"],
+["Roadster","tesroad20"]
+]},
+cupula: {
+title: "Carros de la Cúpula", icon: "🚗",
+items: [
+["Nightshark","nightshark"],
+["Insurgent 2","insurgent2"],
+["Menacer","menacer"],
+["Barrage","barrage"],
+["Pounder 2","pounder2"],
+["Terbyte","terbyte"],
+["Rallytruck","rallytruck"],
+["Brickade","brickade"],
+["Buzzard (helicóptero)","buzzard"],
+["Hunter (helicóptero)","hunter"]
+]},
+baby: {
+title: "Carros Baby", icon: "🚗",
+items: [
+["BMX Baby","bmxbaby"],
+["Mercedes GS63 Baby","babygs63"],
+["Bandito","rcbandito"],
+["Baby Skyline R34","babyr34"],
+["Mercedes GT63 Baby","rmodgt63mini"],
+["Baby Audi R8","babyr8"],
+["Baby R35 Convertible","babygtr35C"],
+["Baby M4 Convertible","babym4C"],
+["Baby Amarok","babyamarok"],
+["Baby Cherokee","babycherokee"],
+["Porsche 911","porscheag"],
+["Fusca Baby","vwfusca"],
+["Baby Deluxo","deluxokid"],
+["Baby Lancer","babylancer"]
+]},
+electronicos: {
+title: "Electrónicos y Juguetes", icon: "🎮",
+items: [
+["Playstation","Playstation"],
+["Xbox","Xbox"],
+["Legos","legos"],
+["Omnitrix","ominitrix"],
+["Teclado","keyboard"],
+["Mouse","mouse"],
+["Notebook","notebook"],
+["Disquete","floppy"]
+]},
+distintivos: {
+title: "Distintivos y Tarjetas", icon: "🏅",
+items: [
+["Distintivo 1","badge01"],
+["Distintivo 2","badge02"],
+["Tarjeta de crédito","creditcard"],
+["Tarjeta de seguridad","propertys"],
+["Tarjeta común","card01"],
+["Tarjeta infrecuente","card02"],
+["Tarjeta épica","card03"],
+["Tarjeta rara","card04"],
+["Tarjeta legendaria","card05"],
+["Pasaporte 0","fidentity"],
+["Pasaporte 1","identity"],
+["Credencial","credential"]
+]},
+lavanderia: {
+title: "Lavandería / Crafting", icon: "🧹",
+items: [
+["Blanqueador grande","alvejantegrande"],
+["Cloro","cloro"],
+["Agua destilada","aguadestilada"],
+["Suero fisiológico","saline"],
+["Acetona","acetone"],
+["Hoja de coca","cokeleaf"],
+["Ácido sulfúrico","sulfuric"],
+["Resortes","molas"],
+["Cuerpo de arma","weaponbody"],
+["Cápsula","capsula"],
+["Pólvora","polvora"]
+]},
+vales: {
+title: "Vales", icon: "🎫",
+items: [
+["Vale - Médico","paramedicpass"],
+["Vale - Ruleta de la fortuna","luckywheelpass"],
+["Vale - Mecánico","mechanicpass"],
+["Vale - Uwu Café","uwucoffeepass"],
+["Vale - Pizza This","pizzathispass"],
+["Vale - BurgerShot","burgershotpass"]
+]},
+restaurantes: {
+title: "Comidas de Restaurantes", icon: "🍔",
+items: [
+["Jugo (BurgerShot)","burgershot1"],
+["Caja de almuerzo (BurgerShot)","burgershot2"],
+["Combo (BurgerShot)","burgershot3"],
+["Combo + Juguete (BurgerShot)","burgershot4"],
+["Jugo (Pizza This)","pizzathis1"],
+["Caja de almuerzo (Pizza This)","pizzathis2"],
+["Combo (Pizza This)","pizzathis3"],
+["Combo + Juguete (Pizza This)","pizzathis4"],
+["Jugo (UwU Coffee)","uwucoffee1"],
+["Caja de almuerzo (UwU Coffee)","uwucoffee2"],
+["Combo (UwU Coffee)","uwucoffee3"],
+["Combo + Juguete (UwU Coffee)","uwucoffee4"],
+["Jugo (Bean Machine)","beanmachine1"],
+["Caja de almuerzo (Bean Machine)","beanmachine2"],
+["Combo (Bean Machine)","beanmachine3"],
+["Combo + Juguete (Bean Machine)","beanmachine4"]
+]},
+miscelaneos: {
+title: "Misceláneos", icon: "🌿",
+items: [
+["Cigarro","cigarette"],["Encendedor","lighter"],["Vape","vape"],["Dinero sucio","dinheirosujo"],["Dinero limpio","dollars"],
+["Pilas","battery"],["Elástico","elastic"],["Botella plástica","plasticbottle"],["Botella de vidrio","glassbottle"],["Lata de metal","metalcan"],
+["Rosa","rose"],["Peluche","teddy"],["Binoculares","binoculars"],["Cámara","camera"],["Pager","pager"],
+["Fuegos artificiales","firecracker"],["Diagrama","diagram"],["Álbum de la Copa","album"],["Megáfono","megaphone"],["Spray","sprays01"],
+["Contrato de desguace","dismantle"],["Alquiler de vehículo","rentalveh"],["Bloqueador de señal","blocksignal"],["Silla de ruedas","wheelchair"],["Evidencia 1","evidence01"],
+["Evidencia 2","evidence02"],["Evidencia 3","evidence03"],["Maleta","pouch"],["Kit residual","gsrkit"],["Kit químico","gdtkit"],
+["Plato","dish"],["Olla","pan"],["Ventilador","fan"],["Rímel","rímel"],["Licuadora","blender"],
+["Interruptor","switch"],["Herradura","horseshoe"],["Cepillo","brush"],["Dominó","domino"],["Cáliz","cup"],
+["Baraja","deck"],["Borrador","eraser"],["Alicates","pliers"],["Lámpara de mesa","lampshade"],["Jabón","soap"],
+["Chancla","slipper"],["Troféo de carrera","racetrophy"],["Vibrador","dildo"],["Desodorante 24hrs","spray01"],["Desodorante 48hrs","spray03"],
+["Desodorante 72hrs","spray04"],["Antiséptico","spray02"],["Dados","dices"],["Plato","plate"]
+]}
+};
+
+// Count totals
+let totalCount = 0;
+Object.keys(DATA).forEach(k => totalCount += DATA[k].items.length);
+document.getElementById('totalItems').textContent = totalCount;
+document.getElementById('totalCategories').textContent = Object.keys(DATA).length;
+
+// Render sections
+const container = document.getElementById('sectionsContainer');
+Object.entries(DATA).forEach(([key, cat]) => {
+const section = document.createElement('div');
+section.className = 'category-section';
+section.id = key;
+let rows = '';
+cat.items.forEach(([name, code], idx) => {
+const isPremium = cat.premium;
+rows += `<tr class="${isPremium ? 'premium-row' : ''}" data-name="${name.toLowerCase()}" data-code="${code.toLowerCase()}">
+<td><div class="item-name"><span class="dot"></span>${name}</div></td>
+<td><span class="spawn-code" onclick="copyCode(this, '${code}')">${code}<span class="copy-tooltip">Copiado!</span></span></td>
+</tr>`;
+});
+section.innerHTML = `
+<div class="category-header">
+<div class="cat-icon">${cat.icon}</div>
+<h3>${cat.title}</h3>
+<span class="cat-badge">${cat.items.length} ítems</span>
+</div>
+<div class="table-wrapper">
+<table><thead><tr><th>Ítem</th><th style="text-align:center">Código de Spawn</th></tr></thead><tbody>${rows}</tbody></table>
+</div>`;
+container.appendChild(section);
+});
+
+// Copy function
+function copyCode(el, code) {
+navigator.clipboard.writeText(code).then(() => {
+const tooltip = el.querySelector('.copy-tooltip');
+tooltip.classList.add('show');
+setTimeout(() => tooltip.classList.remove('show'), 1200);
+});
+}
+
+// Search
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+const query = this.value.toLowerCase().trim();
+const sections = document.querySelectorAll('.category-section');
+sections.forEach(sec => {
+const rows = sec.querySelectorAll('tbody tr');
+let visible = 0;
+rows.forEach(row => {
+const name = row.dataset.name;
+const code = row.dataset.code;
+const match = !query || name.includes(query) || code.includes(query);
+row.style.display = match ? '' : 'none';
+if (match) visible++;
+});
+sec.style.display = visible > 0 ? '' : 'none';
+});
+});
+
+// Nav active state
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('.category-section');
+
+navItems.forEach(item => {
+item.addEventListener('click', function(e) {
+e.preventDefault();
+const targetId = this.dataset.section;
+const target = document.getElementById(targetId);
+if (target) {
+const offset = 20;
+const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+window.scrollTo({ top, behavior: 'smooth' });
+}
+// Close sidebar on mobile
+if (window.innerWidth <= 900) {
+sidebar.classList.remove('open');
+overlay.classList.remove('open');
+}
+});
+});
+
+// Intersection observer for nav
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+const id = entry.target.id;
+navItems.forEach(n => n.classList.remove('active'));
+const activeNav = document.querySelector(`.nav-item[data-section="${id}"]`);
+if (activeNav) activeNav.classList.add('active');
+}
+});
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// Back to top
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+backTop.classList.toggle('visible', window.scrollY > 400);
+});
+backTop.addEventListener('click', () => {
+window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Mobile toggle
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+document.getElementById('mobileToggle').addEventListener('click', () => {
+sidebar.classList.toggle('open');
+overlay.classList.toggle('open');
+});
+overlay.addEventListener('click', () => {
+sidebar.classList.remove('open');
+overlay.classList.remove('open');
+});
+</script>
+</body>
+</html>
+
