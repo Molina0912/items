@@ -1,0 +1,77 @@
+{
+  "common": {
+    "yes": "Si",
+    "no": "No",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "done": "Hecho",
+    "loading": "Cargando...",
+    "retry": "Reintentar"
+  },
+  "errors": {
+    "generic": "Ocurrio un error inesperado",
+    "network": "Error de red: no se puede conectar",
+    "timeout": "La solicitud ha expirado",
+    "not_found": "Recurso no encontrado",
+    "unauthorized": "Se requiere autenticacion",
+    "forbidden": "Acceso denegado",
+    "validation": "Error de validacion: {{field}}"
+  },
+  "cli": {
+    "welcome": "Bienvenido a Expo CLI",
+    "version": "Version {{version}}",
+    "help": "Ejecuta 'expo --help' para ver los comandos disponibles",
+    "session_start": "Iniciando nueva sesion...",
+    "session_end": "Sesion finalizada",
+    "prompt": "Como puedo ayudarte?",
+    "thinking": "Pensando...",
+    "generating": "Generando respuesta..."
+  },
+  "tools": {
+    "file_read": "Leer Archivo",
+    "file_write": "Escribir Archivo",
+    "shell_exec": "Ejecutar Comando",
+    "web_search": "Busqueda Web",
+    "code_analysis": "Analisis de Codigo",
+    "executing": "Ejecutando herramienta: {{name}}"
+  },
+  "permissions": {
+    "request": "Permiso requerido: {{action}} en {{resource}}",
+    "granted": "Permiso concedido",
+    "denied": "Permiso denegado",
+    "always_allow": "Permitir siempre",
+    "allow_once": "Permitir una vez",
+    "deny": "Denegar",
+    "remember_choice": "Recordar esta eleccion"
+  },
+  "session": {
+    "new": "Nueva sesion creada: {{id}}",
+    "resumed": "Sesion reanudada: {{id}}",
+    "saved": "Sesion guardada",
+    "history_empty": "Sin historial de sesiones",
+    "context_cleared": "Contexto limpiado"
+  },
+  "status": {
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "ready": "Listo",
+    "busy": "Procesando...",
+    "error": "Error",
+    "tokens_used": "Tokens utilizados: {{count}}"
+  },
+  "update": {
+    "available": "Actualizacion disponible: {{version}}",
+    "current": "Estas en la ultima version",
+    "checking": "Buscando actualizaciones...",
+    "installing": "Instalando actualizacion..."
+  },
+  "item_one": "{{count}} elemento",
+  "item_other": "{{count}} elementos",
+  "file_one": "{{count}} archivo",
+  "file_other": "{{count}} archivos"
+}

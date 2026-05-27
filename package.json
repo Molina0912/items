@@ -1,0 +1,44 @@
+{
+  "name": "expo-cli",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "bun test tests/",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@expo/agents": "workspace:*",
+    "@expo/cli": "workspace:*",
+    "@expo/config": "workspace:*",
+    "@expo/core": "workspace:*",
+    "@expo/sdk": "workspace:*",
+    "@expo/storage": "workspace:*",
+    "@expo/tools": "workspace:*",
+    "@expo/permissions": "workspace:*",
+    "@expo/hooks": "workspace:*",
+    "@expo/memory": "workspace:*",
+    "@expo/plugins": "workspace:*",
+    "@expo/secrets": "workspace:*",
+    "@expo/mcp": "workspace:*",
+    "@expo/lsp": "workspace:*",
+    "@expo/channels": "workspace:*",
+    "@expo/telemetry": "workspace:*",
+    "@expo/sandbox": "workspace:*",
+    "@expo/tui": "workspace:*",
+    "@expo/ide-protocol": "workspace:*",
+    "@expo/i18n": "workspace:*",
+    "@expo/update": "workspace:*",
+    "@types/bun": "^1.2.14",
+    "eslint": "^9.0.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "zod": "^3.23.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
+  }
+}
