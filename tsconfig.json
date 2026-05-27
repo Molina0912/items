@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/sdk" },
+    { "path": "packages/storage" },
+    { "path": "packages/config" },
+    { "path": "packages/cli" },
+    { "path": "packages/tools" },
+    { "path": "packages/agents" },
+    { "path": "packages/permissions" },
+    { "path": "packages/hooks" },
+    { "path": "packages/memory" },
+    { "path": "packages/plugins" },
+    { "path": "packages/secrets" },
+    { "path": "packages/mcp" },
+    { "path": "packages/lsp" },
+    { "path": "packages/channels" },
+    { "path": "packages/telemetry" },
+    { "path": "packages/sandbox" },
+    { "path": "packages/tui" },
+    { "path": "packages/ide-protocol" },
+    { "path": "packages/i18n" },
+    { "path": "packages/update" },
+    { "path": "apps/expo-cli" }
+  ]
+}

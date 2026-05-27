@@ -1,0 +1,136 @@
+import type { LSPServerConfig } from './types.js';
+
+export const LANGUAGE_SERVERS: Record<string, LSPServerConfig> = {
+  typescript: {
+    name: 'typescript-language-server',
+    language: 'typescript',
+    command: 'typescript-language-server',
+    args: ['--stdio'],
+  },
+  python: {
+    name: 'pylsp',
+    language: 'python',
+    command: 'pylsp',
+    args: [],
+  },
+  rust: {
+    name: 'rust-analyzer',
+    language: 'rust',
+    command: 'rust-analyzer',
+    args: [],
+  },
+  go: {
+    name: 'gopls',
+    language: 'go',
+    command: 'gopls',
+    args: ['serve'],
+  },
+  java: {
+    name: 'jdtls',
+    language: 'java',
+    command: 'jdtls',
+    args: [],
+  },
+  c: {
+    name: 'clangd',
+    language: 'c',
+    command: 'clangd',
+    args: [],
+  },
+  cpp: {
+    name: 'clangd-cpp',
+    language: 'cpp',
+    command: 'clangd',
+    args: [],
+  },
+  ruby: {
+    name: 'solargraph',
+    language: 'ruby',
+    command: 'solargraph',
+    args: ['stdio'],
+  },
+  php: {
+    name: 'intelephense',
+    language: 'php',
+    command: 'intelephense',
+    args: ['--stdio'],
+  },
+  swift: {
+    name: 'sourcekit-lsp',
+    language: 'swift',
+    command: 'sourcekit-lsp',
+    args: [],
+  },
+  kotlin: {
+    name: 'kotlin-language-server',
+    language: 'kotlin',
+    command: 'kotlin-language-server',
+    args: [],
+  },
+  scala: {
+    name: 'metals',
+    language: 'scala',
+    command: 'metals',
+    args: [],
+  },
+  haskell: {
+    name: 'haskell-language-server',
+    language: 'haskell',
+    command: 'haskell-language-server-wrapper',
+    args: ['--lsp'],
+  },
+  elixir: {
+    name: 'elixir-ls',
+    language: 'elixir',
+    command: 'elixir-ls',
+    args: [],
+  },
+  lua: {
+    name: 'lua-language-server',
+    language: 'lua',
+    command: 'lua-language-server',
+    args: [],
+  },
+  zig: {
+    name: 'zls',
+    language: 'zig',
+    command: 'zls',
+    args: [],
+  },
+  dart: {
+    name: 'dart-analyze',
+    language: 'dart',
+    command: 'dart',
+    args: ['language-server', '--protocol=lsp'],
+  },
+  css: {
+    name: 'css-languageserver',
+    language: 'css',
+    command: 'css-languageserver',
+    args: ['--stdio'],
+  },
+  html: {
+    name: 'html-languageserver',
+    language: 'html',
+    command: 'html-languageserver',
+    args: ['--stdio'],
+  },
+  json: {
+    name: 'json-languageserver',
+    language: 'json',
+    command: 'json-languageserver',
+    args: ['--stdio'],
+  },
+  yaml: {
+    name: 'yaml-language-server',
+    language: 'yaml',
+    command: 'yaml-language-server',
+    args: ['--stdio'],
+  },
+  markdown: {
+    name: 'marksman',
+    language: 'markdown',
+    command: 'marksman',
+    args: ['server'],
+  },
+};

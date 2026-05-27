@@ -1,0 +1,11 @@
+export { PluginManifestSchema, PluginCapabilityEnum, PluginHookSchema } from './types.js';
+export type { PluginManifest, PluginCapability, PluginHook, PluginState, PluginInfo } from './types.js';
+export { validateManifest, checkCompatibility } from './manifest.js';
+export { PluginResolver } from './resolver.js';
+export type { ResolvedPlugin } from './resolver.js';
+export { PluginInstaller } from './installer.js';
+export { PluginLoader } from './loader.js';
+export type { PluginExports, LoadedPlugin } from './loader.js';
+export { PluginManager } from './manager.js';
+export { MarketplaceClient } from './marketplace.js';
+export type { MarketplacePlugin } from './marketplace.js';

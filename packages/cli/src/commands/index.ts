@@ -1,0 +1,11 @@
+export type { SlashCommand, CommandContext, CommandResult } from './types.js';
+export { CommandRegistry } from './registry.js';
+export { createHelpCommand } from './help.js';
+export { clearCommand } from './clear.js';
+export { compactCommand } from './compact.js';
+export { configCommand } from './config.js';
+export { modelCommand } from './model.js';
+export { sessionCommand } from './session.js';
+export { toolsCommand } from './tools.js';
+export { agentsCommand } from './agents.js';
+export { permissionsCommand } from './permissions.js';

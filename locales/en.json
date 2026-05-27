@@ -1,0 +1,77 @@
+{
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "loading": "Loading...",
+    "retry": "Retry"
+  },
+  "errors": {
+    "generic": "An unexpected error occurred",
+    "network": "Network error: unable to connect",
+    "timeout": "Request timed out",
+    "not_found": "Resource not found",
+    "unauthorized": "Authentication required",
+    "forbidden": "Access denied",
+    "validation": "Validation failed: {{field}}"
+  },
+  "cli": {
+    "welcome": "Welcome to Expo CLI",
+    "version": "Version {{version}}",
+    "help": "Run 'expo --help' for available commands",
+    "session_start": "Starting new session...",
+    "session_end": "Session ended",
+    "prompt": "How can I help you?",
+    "thinking": "Thinking...",
+    "generating": "Generating response..."
+  },
+  "tools": {
+    "file_read": "Read File",
+    "file_write": "Write File",
+    "shell_exec": "Execute Shell Command",
+    "web_search": "Web Search",
+    "code_analysis": "Code Analysis",
+    "executing": "Executing tool: {{name}}"
+  },
+  "permissions": {
+    "request": "Permission required: {{action}} on {{resource}}",
+    "granted": "Permission granted",
+    "denied": "Permission denied",
+    "always_allow": "Always allow",
+    "allow_once": "Allow once",
+    "deny": "Deny",
+    "remember_choice": "Remember this choice"
+  },
+  "session": {
+    "new": "New session created: {{id}}",
+    "resumed": "Session resumed: {{id}}",
+    "saved": "Session saved",
+    "history_empty": "No session history",
+    "context_cleared": "Context cleared"
+  },
+  "status": {
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "ready": "Ready",
+    "busy": "Processing...",
+    "error": "Error",
+    "tokens_used": "Tokens used: {{count}}"
+  },
+  "update": {
+    "available": "Update available: {{version}}",
+    "current": "You are on the latest version",
+    "checking": "Checking for updates...",
+    "installing": "Installing update..."
+  },
+  "item_one": "{{count}} item",
+  "item_other": "{{count}} items",
+  "file_one": "{{count}} file",
+  "file_other": "{{count}} files"
+}
